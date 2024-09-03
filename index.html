@@ -1,43 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Word Processor</title>
+    <title>리모오피스 - 간단한 워드 프로세서</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
+        .nanum-gothic-regular {
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         .container {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 800px;
-            margin: auto;
-        }
-        textarea {
             width: 100%;
-            height: 300px;
+            padding: 20px;
+            box-sizing: border-box;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
             margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+            color: #555;
+        }
+        input[type="text"], textarea {
+            width: calc(100% - 22px);
             padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             box-sizing: border-box;
         }
+        textarea {
+            height: 200px;
+            resize: vertical;
+        }
         button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Simple Word Processor</h1>
+        <h1>리모오피스</h1>
         <form id="docForm">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required style="width: 100%; padding: 10px; margin-bottom: 20px;">
-            
-            <label for="content">Content:</label>
-            <textarea id="content" name="content" required></textarea>
-            
-            <button type="button" onclick="generateDocx()">Save as .docx</button>
+            <label for="title">제목:</label>
+            <input type="text" id="title" name="title" required placeholder="문서 제목을 입력하세요">
+
+            <label for="content">내용:</label>
+            <textarea id="content" name="content" required placeholder="문서 내용을 입력하세요"></textarea>
+
+            <button type="button" onclick="generateDocx()">저장하기</button>
         </form>
     </div>
 
@@ -49,7 +100,7 @@
             const content = document.getElementById('content').value;
 
             if (!title || !content) {
-                alert('Please enter both a title and content.');
+                alert('제목과 내용을 모두 입력해주세요.');
                 return;
             }
 
@@ -62,6 +113,7 @@
                             new docx.Paragraph({
                                 text: title,
                                 heading: docx.HeadingLevel.HEADING_1,
+                                alignment: docx.AlignmentType.CENTER,
                             }),
                             new docx.Paragraph({
                                 text: content,
