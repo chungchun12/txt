@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>리모오피스 - 간단한 워드프로세서</title>
+    <title>리모오피스 - 간단한 워드 프로세서</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
@@ -88,14 +88,12 @@
             <label for="content">내용:</label>
             <textarea id="content" name="content" required placeholder="문서 내용을 입력하세요"></textarea>
 
-            <button type="button" onclick="generateDocx()">저장하기</button>
+            <button type="button" onclick="saveTxt()">저장하기</button>
         </form>
     </div>
 
-    <!-- Load docx library from CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.0.1/docx.min.js"></script>
     <script>
-        async function generateDocx() {
+        function saveTxt() {
             const title = document.getElementById('title').value;
             const content = document.getElementById('content').value;
 
@@ -104,38 +102,21 @@
                 return;
             }
 
-            // Create a new document
-            const doc = new docx.Document({
-                sections: [
-                    {
-                        properties: {},
-                        children: [
-                            new docx.Paragraph({
-                                text: title,
-                                heading: docx.HeadingLevel.HEADING_1,
-                                alignment: docx.AlignmentType.CENTER,
-                            }),
-                            new docx.Paragraph({
-                                text: content,
-                            }),
-                        ],
-                    },
-                ],
-            });
+            // Create the content for the .txt file
+            const text = `제목: ${title}\n\n내용:\n${content}`;
 
-            // Generate the document
-            try {
-                const blob = await docx.Packer.toBlob(doc);
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `${title}.docx`;
-                a.click();
-                URL.revokeObjectURL(url);
-            } catch (error) {
-                console.error('문서 생성 중 오류 발생:', error);
-                alert('문서 생성 중 오류가 발생했습니다.');
-            }
+            // Create a Blob with the text content
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            // Create a temporary link element
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${title}.txt`;
+            a.click();
+            
+            // Clean up
+            URL.revokeObjectURL(url);
         }
     </script>
 </body>
