@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>리모오피스 - 간단한 워드 프로세서</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        input, div,bady, button{
-  font-family: "Nanum Gothic", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
+        /* 기본 폰트 스타일 적용 */
+        * {
+            font-family: "Nanum Gothic", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
         body {
             background-color: #f0f0f0;
             margin: 0;
@@ -92,7 +93,7 @@
     </div>
 
     <!-- Load docx library from CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.0.5/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.0.1/docx.min.js"></script>
     <script>
         async function generateDocx() {
             const title = document.getElementById('title').value;
