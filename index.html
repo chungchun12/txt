@@ -109,7 +109,7 @@
             }
 
             // Create the content for the .txt file
-            const text = `제목: ${title}\n\n내용:\n${content}`;
+            const text = `${title}\n\n\n${content}`;
 
             // Create a Blob with the text content
             const blob = new Blob([text], { type: 'text/plain' });
